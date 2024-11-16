@@ -59,20 +59,17 @@ func (k msgServer) UpdateDenom(goCtx context.Context, msg *types.MsgUpdateDenom)
 	}
 
 	if !valFound.CanChangeMaxSupply && valFound.MaxSupply != msg.MaxSupply {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "cannot change maxsupply")
+		return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "cannot change maxsupply")
 	}
 	if !valFound.CanChangeMaxSupply && msg.CanChangeMaxSupply {
-		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "Cannot revert change maxsupply flag")
+		return nil, errorsmod.Wrap(sdkerrors.ErrUnauthorized, "Cannot revert change maxsupply flag")
 	}
 	var denom = types.Denom{
 		Owner:              msg.Owner,
 		Denom:              msg.Denom,
 		Description:        msg.Description,
-		Ticker:             msg.Ticker,
-		Precision:          msg.Precision,
 		Url:                msg.Url,
 		MaxSupply:          msg.MaxSupply,
-		Supply:             msg.Supply,
 		CanChangeMaxSupply: msg.CanChangeMaxSupply,
 	}
 
