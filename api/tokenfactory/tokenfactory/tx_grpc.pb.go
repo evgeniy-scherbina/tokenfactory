@@ -24,6 +24,7 @@ const (
 	Msg_CreateDenom_FullMethodName       = "/tokenfactory.tokenfactory.Msg/CreateDenom"
 	Msg_UpdateDenom_FullMethodName       = "/tokenfactory.tokenfactory.Msg/UpdateDenom"
 	Msg_MintAndSendTokens_FullMethodName = "/tokenfactory.tokenfactory.Msg/MintAndSendTokens"
+	Msg_UpdateOwner_FullMethodName       = "/tokenfactory.tokenfactory.Msg/UpdateOwner"
 )
 
 // MsgClient is the client API for Msg service.
@@ -36,6 +37,7 @@ type MsgClient interface {
 	CreateDenom(ctx context.Context, in *MsgCreateDenom, opts ...grpc.CallOption) (*MsgCreateDenomResponse, error)
 	UpdateDenom(ctx context.Context, in *MsgUpdateDenom, opts ...grpc.CallOption) (*MsgUpdateDenomResponse, error)
 	MintAndSendTokens(ctx context.Context, in *MsgMintAndSendTokens, opts ...grpc.CallOption) (*MsgMintAndSendTokensResponse, error)
+	UpdateOwner(ctx context.Context, in *MsgUpdateOwner, opts ...grpc.CallOption) (*MsgUpdateOwnerResponse, error)
 }
 
 type msgClient struct {
@@ -82,6 +84,15 @@ func (c *msgClient) MintAndSendTokens(ctx context.Context, in *MsgMintAndSendTok
 	return out, nil
 }
 
+func (c *msgClient) UpdateOwner(ctx context.Context, in *MsgUpdateOwner, opts ...grpc.CallOption) (*MsgUpdateOwnerResponse, error) {
+	out := new(MsgUpdateOwnerResponse)
+	err := c.cc.Invoke(ctx, Msg_UpdateOwner_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -92,6 +103,7 @@ type MsgServer interface {
 	CreateDenom(context.Context, *MsgCreateDenom) (*MsgCreateDenomResponse, error)
 	UpdateDenom(context.Context, *MsgUpdateDenom) (*MsgUpdateDenomResponse, error)
 	MintAndSendTokens(context.Context, *MsgMintAndSendTokens) (*MsgMintAndSendTokensResponse, error)
+	UpdateOwner(context.Context, *MsgUpdateOwner) (*MsgUpdateOwnerResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -110,6 +122,9 @@ func (UnimplementedMsgServer) UpdateDenom(context.Context, *MsgUpdateDenom) (*Ms
 }
 func (UnimplementedMsgServer) MintAndSendTokens(context.Context, *MsgMintAndSendTokens) (*MsgMintAndSendTokensResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MintAndSendTokens not implemented")
+}
+func (UnimplementedMsgServer) UpdateOwner(context.Context, *MsgUpdateOwner) (*MsgUpdateOwnerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateOwner not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -196,6 +211,24 @@ func _Msg_MintAndSendTokens_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_UpdateOwner_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateOwner)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateOwner(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_UpdateOwner_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateOwner(ctx, req.(*MsgUpdateOwner))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -218,6 +251,10 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "MintAndSendTokens",
 			Handler:    _Msg_MintAndSendTokens_Handler,
+		},
+		{
+			MethodName: "UpdateOwner",
+			Handler:    _Msg_UpdateOwner_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

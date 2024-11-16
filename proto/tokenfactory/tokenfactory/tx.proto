@@ -21,6 +21,7 @@ service Msg {
   rpc CreateDenom       (MsgCreateDenom      ) returns (MsgCreateDenomResponse      );
   rpc UpdateDenom       (MsgUpdateDenom      ) returns (MsgUpdateDenomResponse      );
   rpc MintAndSendTokens (MsgMintAndSendTokens) returns (MsgMintAndSendTokensResponse);
+  rpc UpdateOwner       (MsgUpdateOwner      ) returns (MsgUpdateOwnerResponse      );
 }
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
@@ -75,4 +76,13 @@ message MsgMintAndSendTokens {
 }
 
 message MsgMintAndSendTokensResponse {}
+
+message MsgUpdateOwner {
+  option (cosmos.msg.v1.signer) = "owner";
+  string owner    = 1;
+  string denom    = 2;
+  string newOwner = 3;
+}
+
+message MsgUpdateOwnerResponse {}
 
