@@ -22,6 +22,12 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
 # Add source files
 COPY . .
 
+RUN mkdir -p /root/.tokenfactory/config
+RUN mkdir -p /root/.tokenfactory/data
+
+RUN cp -r /root/tokenfactory/config/* /root/.tokenfactory/config/
+RUN cp -r /root/tokenfactory/data/* /root/.tokenfactory/data/
+
 # Mount go build and mod caches as container caches, persisted between builder invocations
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
