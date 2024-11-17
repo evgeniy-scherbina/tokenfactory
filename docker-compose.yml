@@ -1,6 +1,6 @@
 version: "3"
 services:
-  kavanode:
+  tokenfactorynode1:
     command:
       - sh
       - -c
