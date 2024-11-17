@@ -27,4 +27,4 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
     make install
 
-CMD ["tokenfactory"]
+CMD ["tokenfactoryd"]

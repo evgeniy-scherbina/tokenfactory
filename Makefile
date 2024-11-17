@@ -5,7 +5,7 @@ build-all:
 	env GOOS=darwin GOARCH=arm64 go build -o ./build/tokenfactory-darwin-arm64 ./cmd/tokenfactoryd/main.go
 
 install:
-	go install ./cmd/... # ./cmd/tokenfactoryd/main.go
+	go install ./cmd/...
 
 do-checksum:
 	shasum ./build/tokenfactory-linux-amd64 ./build/tokenfactory-linux-arm64 ./build/tokenfactory-darwin-amd64 ./build/tokenfactory-darwin-arm64 > ./build/release_checksum

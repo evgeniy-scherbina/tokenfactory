@@ -1,0 +1,15 @@
+version: "3"
+services:
+  kavanode:
+    command:
+      - sh
+      - -c
+      - tokenfactoryd start --rpc.laddr=tcp://0.0.0.0:26657
+    image: tokenfactory/tokenfactory:local
+    ports:
+      - 26657:26657
+      - 1317:1317
+      - 9090:9090
+      - 9091:9091
+      - 8545:8545
+      - 8546:8546
